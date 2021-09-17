@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 // import CommentsForm from './CommentsForm/commentsForm';
-// import CommentsTable from './DisplayComments/displayComments';
+import CommentsTable from './DisplayComments/displayComments';
 import {SearchBar, VideoDetail, VideoList} from './index'
 import {Grid} from '@mui/material';
 import youtube from '../api/youtube';
@@ -17,13 +17,12 @@ class App extends Component {
         }
     }
          
-componentDidMount() {
-  this.getComments();
-}
+// componentDidMount() {
+//   this.handleSubmit();
+// }
 
 async getComments() {
-  let response = await axios.get('http://127.0.0.1:8000/comments/test');
-  //console.log(response.data[2].artist);
+  let response = await axios.get(`http://127.0.0.1:8000/comments/test`);
   this.setState({
     comments: response.data
   })
@@ -34,6 +33,10 @@ addComment = async (comments) => {
   .then(response => this.setState({
         comments: [...this.state.comments, response.data]
     }))
+}
+
+onVideoSelect = (video) => {
+  this.setState({ selectedVideo: video });
 }
 
 handleSubmit = async (searchTerm) => {
@@ -47,8 +50,7 @@ handleSubmit = async (searchTerm) => {
   })
   console.log(response.data.items);
   this.setState({
-     videos: response.data.items,
-     selectedVideo: response.data.items[0]
+     videos: response.data.items, selectedVideo: response.data.items[0]
   });
 }
 
@@ -64,8 +66,11 @@ render() {
           <Grid item xs={8}>
             <VideoDetail video={this.state.selectedVideo}/>
           </Grid>
+          <Grid item xs={6}>
+            <CommentsTable comment={this.state.comments}/>
+          </Grid>
           <Grid item xs={4}>
-            <VideoList videos={this.state.videos}/>
+            <VideoList videos={this.state.videos} onVideoSelect={this.onVideoSelect}/>
           </Grid>
         </Grid>
       </Grid>

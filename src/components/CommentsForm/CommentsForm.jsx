@@ -1,8 +1,11 @@
-import React from "react";
+import React, { Component } from "react";
 
 class CommentsForm extends Component {
-    state = {
-        comments: ''
+    constructor(props) {
+        super(props);
+        this.state = {
+            comments: ''
+        }
     }
 
 handleSubmit(event) {
@@ -12,13 +15,16 @@ handleSubmit(event) {
         comment: this.state.comments
     }
     this.props.addComment(comment);
+    this.setState({
+        comments:''
+    });
 }
 handleChange(event) {
-    event.persist();
+    event.persist(); //what does persist do??
 
-this.MediaStreamAudioDestinationNode({
-    [event.target.name]: event.target.value
-})
+    this.setState({
+        [event.target.name]: event.target.value
+    })
 }
 render(){
     return(
@@ -28,10 +34,10 @@ render(){
                     <label>Comment:</label>
                     <input
                     type="text"
-                    name="comment"
+                    name="comments"
                     onChange={(event) => this.handleChange(event)}
-                    value={this.state.comments}
-                    />
+                    value={this.state.comments}/>
+                    <button type='submit'>Add Comment</button>
                 </div>
             </form>
         </div>

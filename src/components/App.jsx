@@ -1,13 +1,19 @@
 import React, { Component } from 'react';
-import CommentsForm from './CommentsForm/commentsForm';
-import CommentsTable from './DisplayComments/displayComments';
+// import CommentsForm from './CommentsForm/commentsForm';
+// import CommentsTable from './DisplayComments/displayComments';
+import {SearchBar, VideoDetail, VideoList} from './index'
+import {Grid} from '@mui/material';
+import youtube from '../api/youtube';
 import axios from 'axios';
 
 class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
+          videos: [],
+          selectedVideo: null,
           comments: []
+          
         }
     }
          
@@ -32,15 +38,46 @@ async addComment(comments) {
     }))
 }
 
+async handleSubmit(searchTerm){
+  const response = await youtube.get('search', {
+    params: {
+      part: 'snippet',
+      maxResults: 4,
+      key: 'AIzaSyB1r_k732RGvq2htmK2tbqXeQXjvWYhkqs',
+      q: searchTerm
+    }
+  })
+  console.log(response.data.items);
+  this.setState({
+     videos: response.data.items,
+     selectedVideo: response.data.items[0]
+  });
+}
+
 render() { 
   console.log("this.state", this.state);
   return(
-    <div>
-        <CommentsForm addComment={(comments) => this.addComment(comments)}/>
-        <CommentsTable comment={this.state.comments}/>
-    </div> 
+    <Grid justify='center' container spacing={16}>
+      <Grid item xs={12}>
+        <Grid container spacing={16}>
+          <Grid item xs={12}>
+            <SearchBar onFormSubmit={this.handleSubmit} />
+          </Grid>
+          <Grid item xs={8}>
+            <VideoDetail video={this.state.selectedVideo}/>
+          </Grid>
+          <Grid item xs={4}>
+            <VideoList videos={this.state.videos}/>
+          </Grid>
+        </Grid>
+      </Grid>
+    </Grid>
   );
 }
 }
     
 export default App;
+              // <div>
+              //     <CommentsForm addComment={(comments) => this.addComment(comments)}/>
+              //     <CommentsTable comment={this.state.comments}/>
+              // </div>

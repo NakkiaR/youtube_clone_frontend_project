@@ -29,16 +29,14 @@ async getComments() {
   })
 }
 
-async addComment(comments) {
-  console.log(comments);
-  debugger
+addComment = async (comments) => {
   await axios.post('http://127.0.0.1:8000/post_comment/', comments)
   .then(response => this.setState({
         comments: [...this.state.comments, response.data]
     }))
 }
 
-async handleSubmit(searchTerm){
+handleSubmit = async (searchTerm) => {
   const response = await youtube.get('search', {
     params: {
       part: 'snippet',

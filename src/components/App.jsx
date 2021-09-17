@@ -1,52 +1,42 @@
 import React, { Component } from 'react';
-import CommentsForm from './components/CommentsForm';
-import CommentsTable from './components/CommentsTable';
-// import './App.css';
+import CommentsForm from './CommentsForm/commentsForm';
+import CommentsTable from './CommentsTable/commentsTable';
 import axios from 'axios';
+import Comments from './Comments/Comments';
 
 class App extends Component {
     constructor(props) {
         super(props);
-        this.state = [];
+        this.state = {
+          comments: []
+        }
     }
-  state = {
-    comments: ('')
-  }
          
-   
-  
 componentDidMount() {
   this.getAllComments();
 }
 
 async getAllComments() {
-  let response = await axios.get('http://127.0.0.1:8000/comments/');
+  let response = await axios.get('http://127.0.0.1:8000/comments/test');
   //console.log(response.data[2].artist);
   this.setState({
     comment: response.data
   })
 }
 
-async postComment() {
-  let response = await axios.post('http://127.0.0.1:8000/comments/');
-  //console.log(response.data[2].comment);
-  this.setState({
-    comments: response.data
-  })
-}
-
-addComment(comments) {
-    console.log(comments);
-    axios.post('http://127.0.0.1:8000/comments/', comments)
-    .then(response => this.setState({
+async addComment(comments) {
+  console.log(comments);
+  debugger
+  await axios.post('http://127.0.0.1:8000/post_comment/', comments)
+  .then(response => this.setState({
         comments: [...this.state.comments, response.data]
     }))
-
 }
+
 mapComments() {
     return this.state.comments.map(comments =>
-        <Comment
-        key={video_id}
+        <Comments
+        key={comments.id}
         comment={comments}
         />
     )

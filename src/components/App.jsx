@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import CommentsForm from './CommentsForm/commentsForm';
-import CommentsTable from './CommentsTable/commentsTable';
+import CommentsTable from './DisplayComments/displayComments';
 import axios from 'axios';
-import Comments from './Comments/Comments';
 
 class App extends Component {
     constructor(props) {
@@ -13,14 +12,14 @@ class App extends Component {
     }
          
 componentDidMount() {
-  this.getAllComments();
+  this.getComments();
 }
 
-async getAllComments() {
+async getComments() {
   let response = await axios.get('http://127.0.0.1:8000/comments/test');
   //console.log(response.data[2].artist);
   this.setState({
-    comment: response.data
+    comments: response.data
   })
 }
 
@@ -33,27 +32,15 @@ async addComment(comments) {
     }))
 }
 
-mapComments() {
-    return this.state.comments.map(comments =>
-        <Comments
-        key={comments.id}
-        comment={comments}
-        />
-    )
-}
-  
 render() { 
-          console.log("this.state", this.state);
-        return(
-        <div>
-            <CommentsForm addComment={(comments) => this.addComment(comments)}/>
-
-            <CommentsTable mapComments={() => this.mapComments()}/>
-        </div> 
-
-            );
-        }
-     }
+  console.log("this.state", this.state);
+  return(
+    <div>
+        <CommentsForm addComment={(comments) => this.addComment(comments)}/>
+        <CommentsTable comment={this.state.comments}/>
+    </div> 
+  );
+}
+}
     
- 
 export default App;

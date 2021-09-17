@@ -12,8 +12,7 @@ class App extends Component {
   state = {
     comments: ('')
   }
-         
-   
+     
   
 componentDidMount() {
   this.getAllComments();
@@ -23,7 +22,7 @@ async getAllComments() {
   let response = await axios.get('http://127.0.0.1:8000/comments/');
   //console.log(response.data[2].artist);
   this.setState({
-    comment: response.data
+    comments: response.data
   })
 }
 

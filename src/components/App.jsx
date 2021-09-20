@@ -18,18 +18,20 @@ class App extends Component {
     }
          
 componentDidMount() {
+  this.getComments();
   this.handleSubmit();
 }
 
 async getComments() {
-  let response = await axios.get(`http://127.0.0.1:8000/comments/test`);
+  let response = await axios.get(`http://127.0.0.1:8000/comments/test/`);
   this.setState({
     comments: response.data
   })
 }
 
-addComment = async (comments) => {
-  await axios.post('http://127.0.0.1:8000/post_comment/', comments)
+addComment = async (comment) => {
+  console.log("Posting body: ", comment)
+  await axios.post('http://127.0.0.1:8000/post_comment/', comment)
   .then(response => this.setState({
         comments: [...this.state.comments, response.data]
     }))
@@ -67,8 +69,9 @@ render() {
             <VideoDetail video={this.state.selectedVideo}/>
           </Grid>
           <Grid item xs={6}>
-            <CommentsTable comment={this.state.comments}/>
+            {console.log("State comments:", this.state.comments)}
             <CommentsForm addComment={(comments) => this.addComment(comments)} />
+            <CommentsTable comments={this.state.comments}/>
           </Grid>
           <Grid item xs={4}>
             <VideoList videos={this.state.videos} onVideoSelect={this.onVideoSelect}/>

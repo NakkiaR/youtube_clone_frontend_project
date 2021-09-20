@@ -6,7 +6,8 @@ class CommentsForm extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            comments: '',
+            videoid: '',
+            comment: '',
 
           }
     }
@@ -14,21 +15,22 @@ class CommentsForm extends Component {
     handleChange = (event) => {
         console.log(event.target.value);
         this.setState({
-          comments: event.target.value
+          comment: event.target.value
       });
     }
     
     handleSubmit = (event) => {
       event.preventDefault();
-      
-        this.props.addComment(this.state.comments);      
+        // console.log("comment form state", this.state)
+        // console.log("comment form state.comment", this.state.comment)
+        this.props.addComment(this.state);      
     }
 
     render() { 
         return (
             <form onSubmit={this.handleSubmit} >
                 <label>Enter new comment</label>
-                <input onChange={this.handleChange} value={this.state.comments}/>
+                <input onChange={this.handleChange} value={this.state.comment}/>
                 <button type='submit'>Save</button>
              </form>
           );

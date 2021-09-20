@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-// import CommentsForm from './CommentsForm/commentsForm';
+import CommentsForm from './CommentsForm/CommentsForm';
 import CommentsTable from './DisplayComments/displayComments';
 import {SearchBar, VideoDetail, VideoList} from './index'
 import {Grid} from '@mui/material';
@@ -17,9 +17,9 @@ class App extends Component {
         }
     }
          
-// componentDidMount() {
-//   this.handleSubmit();
-// }
+componentDidMount() {
+  this.handleSubmit();
+}
 
 async getComments() {
   let response = await axios.get(`http://127.0.0.1:8000/comments/test`);
@@ -45,7 +45,7 @@ handleSubmit = async (searchTerm) => {
       part: 'snippet',
       maxResults: 4,
       key: 'AIzaSyB1r_k732RGvq2htmK2tbqXeQXjvWYhkqs',
-      q: searchTerm
+      q: searchTerm,
     }
   })
   console.log(response.data.items);
@@ -68,6 +68,7 @@ render() {
           </Grid>
           <Grid item xs={6}>
             <CommentsTable comment={this.state.comments}/>
+            <CommentsForm addComment={(comments) => this.addComment(comments)} />
           </Grid>
           <Grid item xs={4}>
             <VideoList videos={this.state.videos} onVideoSelect={this.onVideoSelect}/>
@@ -80,7 +81,4 @@ render() {
 }
     
 export default App;
-              // <div>
-              //     <CommentsForm addComment={(comments) => this.addComment(comments)}/>
-              //     <CommentsTable comment={this.state.comments}/>
-              // </div>
+            

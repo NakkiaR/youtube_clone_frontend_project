@@ -1,6 +1,6 @@
 import React from "react";
 import {Paper} from '@mui/material'
-
+​
 const CommentsTable = (props) => {
     // if(!props.comments) return <div>Commentbox</div>
     debugger;
@@ -8,7 +8,7 @@ const CommentsTable = (props) => {
         <React.Fragment>
             <Paper elevation={6}>
             <div>
-
+​
                 <table>
                     <thead>
                         <tr>
@@ -20,7 +20,7 @@ const CommentsTable = (props) => {
                         {props.comments.map((record, index) => {
                             // {console.log("Comment Data: ", record.comment)}
                             return (
-
+​
                             <tr key={index}>
                                 <td>{record.comment}</td>
                             </tr>
@@ -29,10 +29,10 @@ const CommentsTable = (props) => {
                     </tbody>
                 </table>
             </div>
-
+​
             </Paper>
         </React.Fragment>
     )
 }
-
+​
 export default CommentsTable;

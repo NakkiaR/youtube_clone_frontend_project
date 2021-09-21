@@ -1,52 +1,35 @@
 import React, { Component } from 'react';
-import axios from 'axios';
-// import CommentsTable from './DisplayComments/displayComments';
-
-
+​
 class CommentsForm extends Component {
     constructor(props) {
         super(props);
         this.state = {
             video_id: '',
-            comments: '',
+            comment: ''
           }
     }
-
-    componentDidMount() {
-      this.getComments();
-    }
-    async getComments({videoId}) {
-      let response = await axios.get(`http://127.0.0.1:8000/comments/${videoId}/`);
-      this.setState({
-        comments: response.data
-      })
-    }
-    async addComment(test){
-      console.log(test)
-      await axios.post('http://127.0.0.1:8000/post_comment/', test)
-      .then(response => this.setState({
-            comments: [...this.state.comments, response.data]
-        }))
-    }
+​
     handleChange = (event) => {
+        console.log(event.target.value);
         this.setState({
-          [event.target.name] : event.target.value
+        //   video_id: event.target.value,  
+          comment: event.target.value
       });
     }
+    
     handleSubmit = (event) => {
       event.preventDefault();
-      let comment = {
-        video_id: this.props.videoId,
-        comment : this.state.comments
-      }
-      this.addComment(comment);
+        // console.log("comment form state", this.state)
+        // console.log("comment form state.comment", this.state.comment)
+        this.props.addComment(this.state);      
     }
-
+​
     render() { 
         return (
             <form onSubmit={this.handleSubmit} >
-                <input placeholder= "New Comment" name="comments" type="text" onChange={this.handleChange} value={this.state.comments}/>
-                <button type='submit'>Add</button>
+                <label>Enter new comment</label>
+                <input onChange={this.handleChange} value={this.state.comment}/>
+                <button type='submit'>Save</button>
              </form>
           );
     }

@@ -11,39 +11,23 @@ class App extends Component {
         super(props);
         this.state = {
           videos: [],
+          video_id: null,
           selectedVideo: null,
-          // comments: []
-          
+
         }
     }
          
 // componentDidMount() {
-//   this.getComments();
-//   this.handleSubmit();
-// }
-
-// async getComments() {
-//   let response = await axios.get(`http://127.0.0.1:8000/comments/test/`);
-//   this.setState({
-//     comments: response.data
-//   })
-// }
-
-// addComment = async (comment) => {
-//   console.log("Posting body: ", comment)
-
-//   await axios.post('http://127.0.0.1:8000/post_comment/', comment)
-//   .then(response => this.setState({
-//         comments: [...this.state.comments, response.data]
-//     }))
-// }
+//   this.getComments();}
 
 onVideoSelect = (video) => {
-  this.setState({ selectedVideo: video });
+  console.log(video)
+  this.setState({ 
+    selectedVideo: video,
+    video_id : video.id.videoId
+  });
 }
-
-
-handleSubmit = async (searchTerm) => {
+handleSearch = async (searchTerm) => {
   const response = await youtube.get('search', {
     params: {
       part: 'snippet',
@@ -54,40 +38,31 @@ handleSubmit = async (searchTerm) => {
   })
   console.log(response.data.items);
   this.setState({
-    videos: response.data.items, selectedVideo: response.data.items[0]
+    videos: response.data.items,
+    video_id: response.data.items[0].id.videoId,
+    selectedVideo: response.data.items[0]
   });
 }
-
-// showVideoId = (id) => {
-//   this.setState({ videos:id });
-// }
 
 render() { 
   console.log("this.state", this.state);
   return(
-    <React.Fragment>
-      <Grid justify='center' container spacing={16}>
-        <Grid item xs={12}>
-          <Grid container spacing={16}>
-            <Grid item xs={12}>
-              <SearchBar onFormSubmit={this.handleSubmit} />
-            </Grid>
-            <Grid item xs={8}>
-              <VideoDetail video={this.state.selectedVideo}/>
-            </Grid>
-            <Grid item xs={4}>
-              <VideoList videos={this.state.videos} onVideoSelect={this.onVideoSelect}/>
-            </Grid>
-          </Grid>
-        </Grid>
-      </Grid>
-      <Grid justify='center' container spacing={16} xs={6}>            
-              <CommentsForm videoId={this.state.selectedVideo.id.videoId}/>
-      </Grid>
-      </React.Fragment>
+    <div className='container-fluid'>
+      <div className='row'>
+        <div className='col-md-12'>
+          <SearchBar onFormSubmit={this.handleSearch} />
+        </div>
+      </div>
+      <div className='row mt-4'>
+        <div className='col-md-6 d-flex justify-content-center align-items-center'>
+          <
+
+        </div>
+
+      </div>
+    </div>
   );
 }
 }
-    
 export default App;
             

@@ -1,12 +1,5 @@
 import React, { Component } from 'react';
-import axios from 'axios';
-<<<<<<< HEAD
 
-=======
-// import DisplayComments from './DisplayComments/DisplayComments';
-
-
->>>>>>> c04a369a2e19409146e78b09f72048eb3033ad7f
 class CommentsForm extends Component {
   constructor(props) {
       super(props);
@@ -14,12 +7,6 @@ class CommentsForm extends Component {
         video_id: '',
         comments: '',
       }
-  }
-  async addComment(test){
-    await axios.post('http://127.0.0.1:8000/post_comment/', test)
-    .then(response => this.setState({
-          comments: [...this.state.comments, response.data]
-      }))
   }
   handleChange = (event) => {
       this.setState({
@@ -32,7 +19,7 @@ class CommentsForm extends Component {
       video_id: this.props.videoId,
       comment : this.state.comments
     }
-    this.addComment(comment);
+    this.props.addComment(comment);
     this.setState({
       video_id: '',
       comments: ''

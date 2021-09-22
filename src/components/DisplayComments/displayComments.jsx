@@ -1,28 +1,32 @@
 import React from "react";
-// import {Paper} from '@mui/material';
 
 const CommentsTable = (props) => {
     return (
-        <React.Fragment>
-            <div>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Comments</th>
+        <div>
+            <table>
+                <tbody>
+                    {props.comments.map((comment)=> {
+                        return (
+                        <tr key={comment.id}>
+                            <td>{comment.comment}</td>
+                            <td>{comment.likes}
+                                <button className='btn btn-dark btn-sm' 
+                                onClick={() => props.Like(comment.id)}>Like</button>
+                            </td>
+                            <td>{comment.dislikes}
+                                <button className='btn btn-dark btn-sm' 
+                                onClick={() => props.DisLike(comment.id)}>Dislike</button>
+                            </td>
+                            <td>
+                            <button type="button" className='btn btn-dark btn-sm' 
+                            onClick={() => props.Reply(comment.id)}>Reply</button>
+                            </td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        {props.comments.map((record, index)=> {
-                            return (
-                                <tr key={index}>
-                                    <td>{record.comment}</td>
-                                </tr>
-                            );
-                        })}
-                    </tbody>
-                </table>
-            </div>
-        </React.Fragment>
+                        );
+                    })}
+                </tbody>
+            </table>
+        </div>
     )
 }
 export default CommentsTable;

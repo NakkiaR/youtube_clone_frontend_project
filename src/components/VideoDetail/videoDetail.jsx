@@ -12,8 +12,8 @@ const VideoDetail = ({video}) => {
             <div>
                 <iframe 
                 title="videoPlayer"
-                width = '1080'
-                height = '720'
+                width = '720'
+                height = '480'
                 src={videoSrc}>
                 </iframe>
             </div>

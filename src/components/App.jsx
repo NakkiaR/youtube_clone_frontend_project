@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {SearchBar, VideoDetail, VideoList, CommentsForm, CommentsTable} from './index'
+import {SearchBar, VideoDetail, VideoList, CommentsForm, CommentsTable, ReplyForm} from './index'
 import youtube from '../api/youtube';
 import axios from 'axios'
 
@@ -10,7 +10,7 @@ class App extends Component {
           videos: [],
           video_id: null,
           selectedVideo: null,
-          comments: []
+          comments: [],
         }
     }
 onVideoSelect = (video) => {
@@ -36,12 +36,37 @@ handleSearch = async (searchTerm) => {
     selectedVideo: response.data.items[0]
   });
 }
-async getComments(video_id) {
+
+getComments = async (video_id) =>{
   let response = await axios.get(`http://127.0.0.1:8000/comments/${video_id}/`);
   this.setState({
     comments: response.data
   })
 }
+componentDidMount() {
+  this.getComments();
+}
+addComment = async () =>{
+  await axios.post('http://127.0.0.1:8000/post_comment/')
+  .then(response => this.setState({
+      comments: [...this.state.comments, response.data]
+  }))
+}
+
+addLike = (id) => {
+  axios.get(`http://127.0.0.1:8000/comments/like/${id}/`);
+  this.getComments();
+};
+
+addDislike = (id) => {
+  axios.get(`http://127.0.0.1:8000/comments/dislike/${id}/`);
+  this.getComments();
+};
+
+addReply = (video_id, reply) => {
+  axios.post(`http://127.0.0.1:8000/reply/`, video_id, reply);
+  this.getComments();
+};
 render() { 
   console.log("this.state", this.state);
   return(
@@ -63,17 +88,27 @@ render() {
       </div>
       <div className='row'>
         <div className='col-sm-6'>
-          <CommentsTable comments={this.getComments}/>
+          <CommentsTable 
+          comments={this.state.comments}
+          Like={this.addLike}
+          DisLike={this.addDislike}
+          Reply={this.addReply}/>
             <div className="row">
               <div className="col-8 col-sm-6">
-              <CommentsForm videoId={this.state.video_id}/>
+              <CommentsForm videoId={this.state.video_id} addComment={this.addComment}/>
+              <div className="row">
+                <div className="col-8 col-sm-6">
+                <ReplyForm videoId={this.state.video_id} addReply={this.addReply}/>
+              </div>
               </div>
             </div>
         </div>
     </div>
     </div>
+    </div>
   );
 }
 }
+
 
 export default App;

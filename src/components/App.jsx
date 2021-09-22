@@ -13,6 +13,7 @@ class App extends Component {
           videos: [],
           video_id: null,
           selectedVideo: null,
+          comments: []
 
         }
     }
@@ -56,7 +57,8 @@ render() {
       <div className='row mt-4'>
         <div className='col-md-6 d-flex justify-content-center align-items-center'>
          </div>
-         className='' 
+         <CommentsForm addComment={(comments) => this.addComment(comments)} />
+            <CommentsTable comments={this.state.comments}/> 
 
         </div>
 

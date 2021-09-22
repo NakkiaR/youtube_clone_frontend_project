@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import CommentsTable from './DisplayComments/displayComments';
+// import DisplayComments from './DisplayComments/DisplayComments';
 
 
 class CommentsForm extends Component {

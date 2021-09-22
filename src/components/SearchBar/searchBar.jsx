@@ -1,5 +1,37 @@
+// import React from "react";
+// import {Paper, TextField} from '@mui/material'
+
+// class SearchBar extends React.Component {
+//     state = {
+//         searchTerm: '',
+//     }
+//     handleChange = (event) => {
+//         this.setState({
+//             [event.target.name]: event.target.value
+//         })
+//     };
+//     handleSubmit = (event) => {
+//         event.preventDefault();
+//         this.props.onFormSubmit(this.state.searchTerm);
+//         this.setState({
+//             searchTerm: ''
+//           })
+//     }
+//     render(){
+//         return(
+//             <Paper elevation={6} style={{ padding: '25px' }}>
+//                 <form onSubmit={this.handleSubmit}>
+//                     <TextField fullWidth label="Search..." onChange={this.handleChange} name='searchTerm' value={this.state.searchTerm}/>
+//                 </form>
+//             </Paper>
+//         )
+//     }
+// }
+
+// export default SearchBar;
+
 import React from "react";
-import {Paper, TextField} from '@mui/material'
+import './SearchBar.css';
 
 class SearchBar extends React.Component {
     state = {
@@ -12,23 +44,25 @@ class SearchBar extends React.Component {
     };
     handleSubmit = (event) => {
         event.preventDefault();
-        let search = {
-            searchTerm: this.state.searchTerm
-        }
-        this.props.onFormSubmit(search);
+        this.props.onFormSubmit(this.state.searchTerm);
         this.setState({
             searchTerm: ''
-        })
+          })
     }
     render(){
         return(
-            <Paper elevation={6} style={{ padding: '25px' }}>
-                <form onSubmit={this.handleSubmit}>
-                    <TextField fullWidth label="Search..." onChange={this.handleChange} name='searchTerm' value={this.state.searchTerm}/>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+            
+              <form class="p-2 flex-fill bd-highlight" onSubmit={this.handleSubmit}>
+                  <input class="form-control" type="search" placeholder="Search" aria-label="Search" onChange={this.handleChange} name='searchTerm' value={this.state.searchTerm}/>
+                  {/* <span class="input-group-text" id="basic-addon1">This Thing!</span> */}
+                  <button className='btn btn-dark btn-sm' height='200' width='200' variant="primary" type="submit">Search</button>
                 </form>
-            </Paper>
+              </div>
+        </nav>          
+            
         )
     }
 }
-
 export default SearchBar;

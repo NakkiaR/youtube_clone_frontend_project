@@ -28,7 +28,6 @@ class CommentsForm extends Component {
   render() { 
     return (
       <div className="container jumbotron small" style={{maxHeight: '30vh'}}>
-        <h3>Comment Section: </h3>
         <form className='addComment' onSubmit={this.handleSubmit} >
             <input placeholder= "New Comment" name="comments" type="text" onChange={this.handleChange} value={this.state.comments}/>
             <button type='submit'>Add</button>

@@ -2,8 +2,10 @@ import React from "react";
 
 const CommentsTable = (props) => {
     return (
-        <div>
-            <table>
+        <center>
+        <div className="container jumbotron small" style={{maxHeight: '30vh'}}>
+             <h3>Comment Section: </h3>
+            <table className='table'>
                 <tbody>
                     {props.comments.map((comment)=> {
                         return (
@@ -27,6 +29,7 @@ const CommentsTable = (props) => {
                 </tbody>
             </table>
         </div>
+        </center>
     )
 }
 export default CommentsTable;

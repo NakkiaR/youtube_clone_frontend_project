@@ -27,7 +27,7 @@ class ReplyForm extends Component {
   }
   render() { 
     return (
-      <div>
+      <div className="container jumbotron small" style={{maxHeight: '30vh'}}>
         <form className='Reply' onSubmit={this.handleSubmit} >
             <input placeholder= "Reply" name="reply" type="text" onChange={this.handleChange} value={this.state.reply}/>
             <button type='submit'>Reply</button>

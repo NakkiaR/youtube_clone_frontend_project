@@ -35,16 +35,14 @@ handleSearch = async (searchTerm) => {
     video_id: response.data.items[0].id.videoId,
     selectedVideo: response.data.items[0]
   });
+  this.getComments(this.state.video_id);
 }
-
 getComments = async (video_id) =>{
+  console.log(video_id)
   let response = await axios.get(`http://127.0.0.1:8000/comments/${video_id}/`);
   this.setState({
     comments: response.data
   })
-}
-componentDidMount() {
-  this.getComments();
 }
 addComment = async () =>{
   await axios.post('http://127.0.0.1:8000/post_comment/')
@@ -89,10 +87,10 @@ render() {
       <div className='row'>
         <div className='col-sm-6'>
           <CommentsTable 
-          comments={this.state.comments}
-          Like={this.addLike}
-          DisLike={this.addDislike}
-          Reply={this.addReply}/>
+            comments={this.state.comments}
+            Like={this.addLike}
+            DisLike={this.addDislike}
+            Reply={this.addReply}/>
             <div className="row">
               <div className="col-8 col-sm-6">
               <CommentsForm videoId={this.state.video_id} addComment={this.addComment}/>

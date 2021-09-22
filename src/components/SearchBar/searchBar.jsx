@@ -51,11 +51,11 @@ class SearchBar extends React.Component {
     }
     render(){
         return(
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <div class="container-fluid">
+        <nav className="navbar navbar-expand-lg navbar-light bg-light">
+            <div className="container-fluid">
             
-              <form class="p-2 flex-fill bd-highlight" onSubmit={this.handleSubmit}>
-                  <input class="form-control" type="search" placeholder="Search" aria-label="Search" onChange={this.handleChange} name='searchTerm' value={this.state.searchTerm}/>
+              <form className="p-2 flex-fill bd-highlight" onSubmit={this.handleSubmit}>
+                  <input className="form-control" type="search" placeholder="Search" aria-label="Search" onChange={this.handleChange} name='searchTerm' value={this.state.searchTerm}/>
                   {/* <span class="input-group-text" id="basic-addon1">This Thing!</span> */}
                   <button className='btn btn-dark btn-sm' height='200' width='200' variant="primary" type="submit">Search</button>
                 </form>

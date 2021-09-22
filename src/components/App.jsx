@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
-import CommentsForm from './CommentsForm/CommentsForm';
-import CommentsTable from './DisplayComments/displayComments';
-import {SearchBar, VideoDetail, VideoList} from './index'
-import {Grid} from '@mui/material';
+import {SearchBar, VideoDetail, VideoList, CommentsForm, CommentsTable} from './index'
 import youtube from '../api/youtube';
-// import axios from 'axios';
+import axios from 'axios'
 
 class App extends Component {
     constructor(props) {
@@ -13,13 +10,9 @@ class App extends Component {
           videos: [],
           video_id: null,
           selectedVideo: null,
-
+          comments: []
         }
     }
-         
-// componentDidMount() {
-//   this.getComments();}
-
 onVideoSelect = (video) => {
   console.log(video)
   this.setState({ 
@@ -43,27 +36,44 @@ handleSearch = async (searchTerm) => {
     selectedVideo: response.data.items[0]
   });
 }
-
+async getComments(video_id) {
+  let response = await axios.get(`http://127.0.0.1:8000/comments/${video_id}/`);
+  this.setState({
+    comments: response.data
+  })
+}
 render() { 
   console.log("this.state", this.state);
   return(
     <div className='container-fluid'>
-      <div className='row'>
+      <div className='row m-2'>
         <div className='col-md-12'>
           <SearchBar onFormSubmit={this.handleSearch} />
         </div>
       </div>
-      <div className='row mt-4'>
-        <div className='col-md-6 d-flex justify-content-center align-items-center'>
-         </div>
-         className='' 
-
+      <div>
+        <div className='row align-items-center mt-5 justify-content-around'>
+          <div className='col-md-5'>
+          <VideoDetail video={this.state.selectedVideo}/>
+          </div>
+          <div className='col-md-5'>
+          <VideoList videos={this.state.videos} onVideoSelect={this.onVideoSelect}/>
+          </div>
         </div>
-
       </div>
-    // </div>
+      <div className='row'>
+        <div className='col-sm-6'>
+          <CommentsTable comments={this.getComments}/>
+            <div className="row">
+              <div className="col-8 col-sm-6">
+              <CommentsForm videoId={this.state.video_id}/>
+              </div>
+            </div>
+        </div>
+    </div>
+    </div>
   );
 }
 }
+
 export default App;
-            

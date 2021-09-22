@@ -1,6 +1,12 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+<<<<<<< HEAD
 
+=======
+// import DisplayComments from './DisplayComments/DisplayComments';
+
+
+>>>>>>> c04a369a2e19409146e78b09f72048eb3033ad7f
 class CommentsForm extends Component {
   constructor(props) {
       super(props);
